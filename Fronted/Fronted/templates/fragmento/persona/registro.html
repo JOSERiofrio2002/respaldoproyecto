@@ -1,0 +1,42 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="pagetitle">
+    <h1>Registro de Persona</h1>
+  </div>
+  
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Ingresa los datos de la persona</h5>
+
+            <form class="row g-3 needs-validation" method="POST" action="/admin/person/save" novalidate>
+              <div class="mb-3">
+                <label for="ape" class="form-label">Apellido</label>
+                <input type="text" class="form-control"  name="ape" required>
+              </div>
+              <div class="mb-3">
+                <label for="nom" class="form-label">Nombre</label>
+                <input type="text" class="form-control"  name="nom" required>
+              </div>
+              <div class="mb-3">
+                <label for="dni" class="form-label">DNI</label>
+                <input type="text" class="form-control"  name="dni" required>
+              </div>
+              <div class="mb-3">
+                <label for="fono" class="form-label">Celular</label>
+                <input type="text" class="form-control"  name="fono" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

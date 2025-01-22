@@ -1,0 +1,70 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="pagetitle">
+    <h1>Editar Infracción</h1>
+  </div>
+  <section class="section">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Modifica los datos de la infracción</h5>
+
+            <form class="row g-3 needs-validation" method="POST" action="/admin/infraccion/update" novalidate id="editForm">
+              <input type="hidden" value="{{ infraccion.id }}" name="idInfraccion" />
+
+              <!-- Sección Infracción -->
+              <hr>
+              <h6>Infracción</h6>
+              
+              <div class="col-md-6 mb-3">
+                <label for="numTarjeta" class="form-label">Número de Tarjeta</label>
+                <input type="number" class="form-control" id="numTarjeta" name="numTarjeta" required value="{{ infraccion.numTarjeta }}">
+                <div class="invalid-feedback">Por favor, ingrese el número de tarjeta.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="identificacionJugador" class="form-label">Identificación del Jugador</label>
+                <input type="text" class="form-control" id="identificacionJugador" name="identificacionJugador" required value="{{ infraccion.identificacionJugador }}">
+                <div class="invalid-feedback">Por favor, ingrese la identificación del jugador.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="colorTarjeta" class="form-label">Color de Tarjeta</label>
+                <select class="form-control" id="colorTarjeta" name="colorTarjeta" required>
+                  <option value="AMARILLA" {% if infraccion.colorTarjeta == 'AMARILLA' %}selected{% endif %}>Amarilla</option>
+                  <option value="ROJA" {% if infraccion.colorTarjeta == 'ROJA' %}selected{% endif %}>Roja</option>
+                </select>
+                <div class="invalid-feedback">Seleccione el color de la tarjeta.</div>
+              </div>
+
+              <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Validación personalizada en el formulario
+  (function () {
+    'use strict'
+    window.addEventListener('load', function () {
+      var form = document.getElementById('editForm');
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    }, false);
+  })();
+</script>
+{% endblock %}

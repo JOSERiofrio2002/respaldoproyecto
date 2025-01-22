@@ -1,0 +1,20 @@
+[
+    {
+        "nombre": "Juan",
+        "apellido": "Perez",
+        "identificacion": "12345678",
+        "celular": "123456789",
+        "genero": "MASCULINO",
+        "asociacion": "Asociacion de Arbitros",
+        "fechaNacimiento": "1980-01-01"
+    },
+    {
+        "nombre": "Carlos",
+        "apellido": "Gomez",
+        "identificacion": "87654321",
+        "celular": "987654321",
+        "genero": "MASCULINO",
+        "asociacion": "Federacion de Arbitros",
+        "fechaNacimiento": "1985-05-15"
+    }
+]

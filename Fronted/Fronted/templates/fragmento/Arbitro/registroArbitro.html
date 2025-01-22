@@ -1,0 +1,99 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="pagetitle">
+    <h1>Registro de Arbitro</h1>
+  </div>
+  <section class="section">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Registrar Arbitro</h5>
+
+            <form class="row g-3 needs-validation" method="POST" action="/admin/arbitro/save" novalidate id="registroForm">
+
+              <!-- Sección Arbitro -->
+              <hr>
+              <h6>Arbitro</h6>
+         
+              <div class="col-md-6 mb-3">
+                <label for="nom" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nom" name="nom" required value="{{ person.nombre }}">
+                <div class="invalid-feedback">Por favor, ingrese el nombre del dirigente.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="ape" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="ape" name="ape" required value="{{ person.apellido }}">
+                <div class="invalid-feedback">Por favor, ingrese el apellido del arbitro.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="tipoIdentificacion" class="form-label">Tipo de Identificación</label>
+                <select class="form-control" id="tipoIdentificacion" name="tipo" required>
+                  {% for item in list %}
+                  <option value="{{ item }}" {% if item == person.tipo %}selected{% endif %}>{{ item }}</option>
+                  {% endfor %}
+                </select>
+                <div class="invalid-feedback">Seleccione un tipo de identificación.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="ident" class="form-label">Número de Identificación</label>
+                <input type="text" class="form-control" id="ident" name="ident" required value="{{ person.identificacion }}">
+                <div class="invalid-feedback">Ingrese el número de identificación.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="fono" class="form-label">Celular</label>
+                <input type="text" class="form-control" id="fono" name="fono" required value="{{ person.celular }}">
+                <div class="invalid-feedback">Ingrese un número de celular.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="genero" class="form-label">Género</label>
+                <select class="form-control" id="genero" name="genero" required>
+                  {% for item in list2 %}
+                  <option value="{{ item }}" {% if item == person.genero %}selected{% endif %}>{{ item }}</option>
+                  {% endfor %}
+                </select>
+                <div class="invalid-feedback">Seleccione el género.</div>
+              </div>
+            
+              <div class="col-md-6 mb-3">
+                <label for="asociacion" class="form-label">Asociación</label>
+                <input type="text" class="form-control" id="asociacion" name="asociacion" required value="{{ person.asociacion }}">
+                <div class="invalid-feedback">Ingrese la asociación.</div>
+              </div>
+
+              <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Validación personalizada en el formulario
+  (function () {
+    'use strict'
+    window.addEventListener('load', function () {
+      var form = document.getElementById('registroForm');
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    }, false);
+  })();
+</script>
+
+{% endblock %}

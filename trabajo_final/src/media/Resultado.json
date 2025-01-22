@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "equipoGanador": "Equipo A",
+        "equipoPerdedor": "Equipo B",
+        "golesEquipo1": 2,
+        "golesEquipo2": 1,
+        "empate": false,
+        "puntosEncuentro": 3
+    },
+    {
+        "id": 2,
+        "equipoGanador": "Equipo C",
+        "equipoPerdedor": "Equipo D",
+        "golesEquipo1": 3,
+        "golesEquipo2": 2,
+        "empate": false,
+        "puntosEncuentro": 3
+    },
+    {
+        "id": 3,
+        "equipoGanador": "Barcelona",
+        "equipoPerdedor": "Real Madrid",
+        "golesEquipo1": 4, 
+        "golesEquipo2": 0,
+        "empate": true,
+        "puntosEncuentro": 3
+    }
+]

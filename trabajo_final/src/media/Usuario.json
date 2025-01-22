@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "correo": "prueba",
+        "contrasenia": "prueba",
+        "estado": true
+    },
+    {
+        "id": 2,
+        "correo": "prueba2",
+        "contrasenia": "prueba2",
+        "estado": false
+    }
+]

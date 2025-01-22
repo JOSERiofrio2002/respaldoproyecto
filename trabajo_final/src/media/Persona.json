@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "nombre": "Admin",
+        "apellido": "Admin",
+        "tipo": "CEDULA",
+        "identificacion": "1234567890",
+        "fechaNacimiento": "Jan 1, 1990 12:00:00 AM",
+        "celular": "1234567890",
+        "genero": "MASCULINO",
+        "activo": false
+    },
+    {
+        "id": 2,
+        "nombre": "Admin",
+        "apellido": "Admin",
+        "tipo": "CEDULA",
+        "identificacion": "1234567890",
+        "fechaNacimiento": "Jan 1, 1990 12:00:00 AM",
+        "celular": "1234567890",
+        "genero": "MASCULINO",
+        "activo": false
+    },
+    {
+        "id": 3,
+        "nombre": "Admiddddddn",
+        "apellido": "Admin",
+        "tipo": "CEDULA",
+        "identificacion": "1234567890",
+        "fechaNacimiento": "Jan 1, 1990 12:00:00 AM",
+        "celular": "1234567890",
+        "genero": "MASCULINO",
+        "activo": false
+    }
+]

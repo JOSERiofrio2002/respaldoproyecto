@@ -1,0 +1,256 @@
+{% extends 'template.html' %}
+{% block content %}
+<div class="col-12">
+    <h2 class="mt-4">Encuentros</h2>
+    <div class="justify-content-end mb-3">
+        <a href="/admin/encuentro/register" class="btn btn-success">Nuevo Encuentro</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Inscrito 1</th>
+                <th>Inscrito 2</th>
+                <th>Ubicación</th>
+                <th>Identificación</th>
+                <th>Estado</th>
+                <th>Hora de Inicio</th>
+            </tr>
+        </thead>
+        <tbodyd id="encuentroTableBody">
+            {% if list %}
+            {% for item in list %}
+            <tr id="row-{{ item.id }}">
+                <td>{{ item.id }}</td>
+                <td>{{ item.idInscrito1 }}</td>
+                <td>{{ item.idInscrito2 }}</td>
+                <td>{{ item.ubicacion }}</td>
+                <td>{{ item.identificacion }}</td>
+                <td>{{ 'Activo' if item.estado else 'Inactivo' }}</td>
+                <td>{{ item.horaInicio }}</td>
+                <td> 
+                    <a href="/admin/encuentro/edit/{{ item.id }}" class="btn btn-info">Modificar</a>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="deleteRow('{{ item.id }}')">Eliminar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="8">No hay Encuentros registrados.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+<!-- Panel de Búsqueda -->
+<div class="col-md-6">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Búsqueda de Encuentros</h5>
+        </div>
+        <div class="card-body">
+            <form id="searchForm" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="searchField" class="form-label">Campo de búsqueda</label>
+                    <select class="form-select" id="searchField" required>
+                        <option value="">Seleccione un campo</option>
+                        <option value="idInscrito1">Inscrito1</option>
+                        <option value="idInscrito2">Inscrito2</option>
+                        <option value="ubicacion">Ubicacion</option>
+                        <option value="identificacion">Identificación</option>
+                        <option value="horaInicio">Hora Inicio</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="searchAlgorithm" class="form-label">Algoritmo de búsqueda</label>
+                    <select class="form-select" id="searchAlgorithm" required>
+                        <option value="linear">Búsqueda Lineal</option>
+                        <option value="binary">Búsqueda Binaria</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="searchValue" class="form-label">Valor a buscar</label>
+                    <input type="text" class="form-control" id="searchValue" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Panel de Ordenamiento -->
+<div class="col-md-6">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h5 class="card-title mb-0">Ordenamiento de Encuentros</h5>
+        </div>
+        <div class="card-body">
+            <form id="sortForm" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="sortField" class="form-label">Criterio de ordenamiento</label>
+                    <select class="form-select" id="sortField" required>
+                        <option value="">Seleccione un campo</option>
+                        <option value="idInscrito1">Inscrito1</option>
+                        <option value="idInscrito2">Inscrito2</option>
+                        <option value="ubicacion">Ubicacion</option>
+                        <option value="identificacion">Identificación</option>
+                        <option value="horaInicio">Hora Inicio</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="sortAlgorithm" class="form-label">Algoritmo de ordenamiento</label>
+                    <select class="form-select" id="sortAlgorithm" required>
+                        <option value="quicksort">QuickSort</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="sortDirection" class="form-label">Dirección</label>
+                    <select class="form-select" id="sortDirection" required>
+                        <option value="asc">Ascendente</option>
+                        <option value="desc">Descendente</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="bi bi-sort-alpha-down"></i> Ordenar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchForm = document.getElementById('searchForm');
+        const sortForm = document.getElementById('sortForm');
+        const algorithmInfo = document.getElementById('algorithmInfo');
+
+        // Configurar validación de formularios
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            });
+        });
+
+        // Manejar búsqueda
+        searchForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+                const searchField = document.getElementById('searchField').value;
+                const searchValue = document.getElementById('searchValue').value;
+                const searchAlgorithm = document.getElementById('searchAlgorithm').value;
+
+                try {
+                    const response = await fetch(`/admin/encuentro/buscar?${searchField}=${searchValue}&algorithm=${searchAlgorithm}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateTable(data.data);
+                        algorithmInfo.textContent = `Último algoritmo usado: Búsqueda ${searchAlgorithm === 'linear' ? 'Lineal' : 'Binaria'}`;
+                    } else {
+                        throw new Error('Error en la búsqueda');
+                    }
+                } catch (error) {
+                    alert('Error al realizar la búsqueda: ' + error.message);
+                }
+            }
+        });
+
+        // Manejar ordenamiento
+        sortForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+                const sortField = document.getElementById('sortField').value;
+                const sortDirection = document.getElementById('sortDirection').value;
+                const sortAlgorithm = document.getElementById('sortAlgorithm').value;
+
+                try {
+                    const response = await fetch(`/admin/encuentro/ordenar?by=${sortField}&direction=${sortDirection}&algorithm=${sortAlgorithm}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateTable(data.data);
+                        algorithmInfo.textContent = `Último algoritmo usado: ${sortAlgorithm.charAt(0).toUpperCase() + sortAlgorithm.slice(1)}`;
+                    } else {
+                        throw new Error('Error en el ordenamiento');
+                    }
+                } catch (error) {
+                    alert('Error al ordenar los datos: ' + error.message);
+                }
+            }
+        });
+
+        function updateTable(data) {
+            const tbody = document.getElementById('encuentroTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <tr>
+                   <td>${ item.id }</td>
+                   <td>${ item.idInscrito1}</td>
+                   <td>${ item.idInscrito2 }</td>
+                   <td>${ item.ubicacion }</td>
+                   <td>${ item.identificacion }</td>
+                   <td>${ item.horaInicio }</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="/admin/encuentro/edit/${item.id}" class="btn btn-sm btn-info">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button class="btn btn-sm btn-danger" onclick="deleteEncuentro(${item.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Manejar el tipo de entrada según el campo de búsqueda
+        document.getElementById('searchField').addEventListener('change', function () {
+            const valueInput = document.getElementById('searchValue');
+
+            switch (this.value) {
+                case 'fecha':
+                    valueInput.type = 'date';
+                    break;
+                default:
+                    valueInput.type = 'text';
+                    break;
+            }
+        });
+    });
+
+
+function deleteRow(id) {
+    if (confirm('¿Está seguro de que desea eliminar este encuentro?')) {
+        fetch(`/admin/encuentro/delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ idEncuentro: id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.msg === 'Ok') {
+                document.getElementById(`row-${id}`).remove();
+            } else {
+                alert('Error al eliminar el encuentro');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+}
+</script>
+{% endblock %}

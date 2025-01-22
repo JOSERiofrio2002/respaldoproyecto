@@ -1,0 +1,61 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Listado de Clientes</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Pages</li>
+            <li class="breadcrumb-item active">Listado de Clientes</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="col-12">
+    <h2 class="mt-4">LISTADO DE CLIENTES</h2>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/admin/person/register" class="btn btn-success">Nuevo</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Cliente</th>
+                <th>DNI</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if list %}
+                {% for item in list %}
+                <tr id="row-{{ item.idPersona }}">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.apellido }} {{ item.nombre }}</td>
+                    <td>{{ item.dni }}</td>
+                    <td>{{ item.celular }}</td>
+                    <td>
+                        <a href="/admin/person/edit/{{ item.idPersona }}" class="btn btn-info">Modificar</a>
+                        <button class="btn btn-danger" onclick="deleteRow({{ item.idPersona }})">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">No hay clientes registrados.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function deleteRow(id) {
+        const row = document.getElementById(`row-${id}`);
+        if (confirm("¿Estás seguro de que deseas eliminar este cliente?")) {
+            row.remove(); // Elimina la fila de la tabla
+        }
+    }
+</script>
+{% endblock %}
