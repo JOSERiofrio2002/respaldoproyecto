@@ -1,14 +1,16 @@
 package com.example.controller.dao.services;
 
+import java.util.HashMap;
+
 import com.example.controller.dao.EncuentroDao;
 import com.example.controller.tda.list.LinkedList;
 import com.example.models.Encuentro;
+import com.example.models.Resultado;
 
 public class EncuentroServices {
 
     private EncuentroDao encuentroDao;
     private Encuentro encuentro;
-
     public EncuentroServices() {
         this.encuentroDao = new EncuentroDao();
     }
@@ -30,6 +32,30 @@ public class EncuentroServices {
 
     public LinkedList<Encuentro> listAll() {
         return encuentroDao.getListAll();
+    }
+
+    public Object[] getListAll() throws Exception {
+        if(!encuentroDao.getListAll().isEmpty()) {
+            Encuentro[] lista = (Encuentro[]) encuentroDao.getListAll().toArray();
+            Object[] respuesta = new Object[lista.length];
+            for(int i = 0; i < lista.length; i++) {
+                Resultado p = new ResultadoServices().get(lista[i].getId());
+
+                HashMap mapa = new HashMap<>();
+                mapa.put("id", lista[i].getId());
+                mapa.put("idInscrito1", lista[i].getIdInscrito1());
+                mapa.put("idInscrito2", lista[i].getIdInscrito2());
+                mapa.put("ubicacion", lista[i].getUbicacion());
+                mapa.put("identificacion", lista[i].getIdentificacion());
+                mapa.put("estado", lista[i].getEstado());
+                mapa.put("horaInicio", lista[i].getHoraInicio());
+                mapa.put("resultado", p);
+
+                respuesta[i] = mapa;
+            }
+            return respuesta;
+        }
+        return new Object[]{};
     }
 
     public Encuentro get(Integer id) throws Exception {

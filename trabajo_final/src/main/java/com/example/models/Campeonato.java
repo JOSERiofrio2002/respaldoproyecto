@@ -21,6 +21,10 @@ public class Campeonato {
         this.categoria = categoria;
     }
 
+    public Campeonato(TipoCategoria categoria) {
+        this.categoria = categoria;
+    }
+
     public Integer getId() {
         return id;
     }

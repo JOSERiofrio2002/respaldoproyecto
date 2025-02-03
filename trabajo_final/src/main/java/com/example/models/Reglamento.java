@@ -1,17 +1,15 @@
 package com.example.models;
 
-import com.example.models.enumerador.Formato;
-
 public class Reglamento {
     private Integer id;
     private String nombreReglamento;
     private String descripcion;
-    private Formato formato;
+    private String formato;
 
     public Reglamento() {
     }
 
-    public Reglamento(Integer id, String nombreReglamento, String descripcion, Formato formato) {
+    public Reglamento(Integer id, String nombreReglamento, String descripcion, String formato) {
         this.id = id;
         this.nombreReglamento = nombreReglamento;
         this.descripcion = descripcion;
@@ -42,12 +40,13 @@ public class Reglamento {
         this.descripcion = descripcion;
     }
 
-    public Formato getFormato() {
+    public String getFormato() {
         return formato;
     }
 
-    public void setFormato(Formato formato) {
+    public void setFormato(String formato) {
         this.formato = formato;
     }
+
     
 }

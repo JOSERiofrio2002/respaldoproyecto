@@ -10,7 +10,6 @@ public class Resultado {
     private Boolean empate;
     private Integer puntosEncuentro;
 
-    private Encuentro encuentro;
 
 
     public Resultado() {
@@ -84,9 +83,6 @@ public class Resultado {
         this.puntosEncuentro = puntosEncuentro;
     }
 
-    public Encuentro getEncuentro() {
-        return encuentro;
-    }
 
     
 

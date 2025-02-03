@@ -9,49 +9,15 @@ public class Encuentro {
     private String identificacion;
     private Boolean estado;
     private Time horaInicio;
+    private Integer resultado;
 
-    private String equipo1;
-    private String equipo2;
-    private int golesEquipo1;
-    private int golesEquipo2;
-    private boolean empate;
-
-
-    public void setEquipo1(String equipo1) {
-
-        this.equipo1 = equipo1;
-
+    
+    public Integer getResultado() {
+        return resultado;
     }
 
-
-    public void setEquipo2(String equipo2) {
-
-        this.equipo2 = equipo2;
-
-    }
-
-
-
-    public void setGolesEquipo1(int golesEquipo1) {
-
-        this.golesEquipo1 = golesEquipo1;
-
-    }
-
-
-
-    public void setGolesEquipo2(int golesEquipo2) {
-
-        this.golesEquipo2 = golesEquipo2;
-
-    }
-
-
-
-    public void setEmpate(boolean empate) {
-
-        this.empate = empate;
-
+    public void setResultado(Integer resultado) {
+        this.resultado = resultado;
     }
 
     public Encuentro() {

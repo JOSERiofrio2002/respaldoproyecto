@@ -13,8 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.example.controller.services.ResultadoServices;
-import com.example.models.Encuentro;
+import com.example.controller.dao.services.ResultadoServices;  
 import com.example.models.Resultado;
 
 @Path("resultado")
@@ -71,6 +70,8 @@ public class ResultadoApi {
     public Response save(HashMap<String, Object> map) {
         HashMap<String, Object> res = new HashMap<>();
 
+       
+
         try {
             ResultadoServices rs = new ResultadoServices();
             rs.getResultado().setEquipoGanador(map.get("equipoGanador").toString());
@@ -79,14 +80,6 @@ public class ResultadoApi {
             rs.getResultado().setGolesEquipo2(Integer.parseInt(map.get("golesEquipo2").toString()));
             rs.getResultado().setEmpate(Boolean.parseBoolean(map.get("empate").toString()));
             rs.getResultado().setPuntosEncuentro(Integer.parseInt(map.get("puntosEncuentro").toString()));
-
-            // Manejar encuentros
-            Encuentro encuentro = new Encuentro();
-            encuentro.setEquipo1(map.get("equipo1").toString());
-            encuentro.setEquipo2(map.get("equipo2").toString());
-            encuentro.setGolesEquipo1(Integer.parseInt(map.get("golesEquipo1").toString()));
-            encuentro.setGolesEquipo2(Integer.parseInt(map.get("golesEquipo2").toString()));
-            encuentro.setEmpate(Boolean.parseBoolean(map.get("empate").toString()));
 
             rs.save();
             res.put("msg", "Ok");
@@ -117,14 +110,6 @@ public class ResultadoApi {
             rs.getResultado().setEmpate(Boolean.parseBoolean(map.get("empate").toString()));
             rs.getResultado().setPuntosEncuentro(Integer.parseInt(map.get("puntosEncuentro").toString()));
 
-            // Manejar encuentros
-            Encuentro encuentro = new Encuentro();
-            encuentro.setEquipo1(map.get("equipo1").toString());
-            encuentro.setEquipo2(map.get("equipo2").toString());
-            encuentro.setGolesEquipo1(Integer.parseInt(map.get("golesEquipo1").toString()));
-            encuentro.setGolesEquipo2(Integer.parseInt(map.get("golesEquipo2").toString()));
-            encuentro.setEmpate(Boolean.parseBoolean(map.get("empate").toString()));
-            
             rs.save();
             res.put("msg", "Ok");
             res.put("data", "Guardado correctamente");

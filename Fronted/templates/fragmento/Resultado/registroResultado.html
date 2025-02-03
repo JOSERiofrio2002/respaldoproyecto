@@ -1,0 +1,87 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="pagetitle">
+    <h1>Registro de Resultado</h1>
+  </div>
+  <section class="section">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Registrar Resultado</h5>
+
+            <form class="row g-3 needs-validation" method="POST" action="/admin/resultado/save" novalidate id="registroForm">
+
+              <!-- Sección Resultado -->
+              <hr>
+              <h6>Resultado</h6>
+         
+              <div class="col-md-6 mb-3">
+                <label for="equipoGanador" class="form-label">Equipo Ganador</label>
+                <input type="text" class="form-control" id="equipoGanador" name="equipoGanador" required>
+                <div class="invalid-feedback">Por favor, ingrese el equipo ganador.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="equipoPerdedor" class="form-label">Equipo Perdedor</label>
+                <input type="text" class="form-control" id="equipoPerdedor" name="equipoPerdedor" required>
+                <div class="invalid-feedback">Por favor, ingrese el equipo perdedor.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="golesEquipo1" class="form-label">Goles Equipo 1</label>
+                <input type="number" class="form-control" id="golesEquipo1" name="golesEquipo1" required>
+                <div class="invalid-feedback">Por favor, ingrese los goles del equipo 1.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="golesEquipo2" class="form-label">Goles Equipo 2</label>
+                <input type="number" class="form-control" id="golesEquipo2" name="golesEquipo2" required>
+                <div class="invalid-feedback">Por favor, ingrese los goles del equipo 2.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="empate" class="form-label">Empate</label>
+                <select class="form-control" id="empate" name="empate" required>
+                  <option value="true">Sí</option>
+                  <option value="false">No</option>
+                </select>
+                <div class="invalid-feedback">Por favor, seleccione si hubo empate.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="puntosEncuentro" class="form-label">Puntos del Encuentro</label>
+                <input type="number" class="form-control" id="puntosEncuentro" name="puntosEncuentro" required>
+                <div class="invalid-feedback">Por favor, ingrese los puntos del encuentro.</div>
+              </div>
+
+              <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Validación personalizada en el formulario
+  (function () {
+    'use strict'
+    window.addEventListener('load', function () {
+      var form = document.getElementById('registroForm');
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    }, false);
+  })();
+</script>
+{% endblock %}

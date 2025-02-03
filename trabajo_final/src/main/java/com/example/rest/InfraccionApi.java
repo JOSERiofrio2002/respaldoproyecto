@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.example.controller.services.InfraccionServices;
+import com.example.controller.dao.services.InfraccionServices;
 import com.example.controller.tda.list.LinkedList;
 import com.example.models.Infraccion;
 import com.example.models.enumerador.ColorTarjeta;

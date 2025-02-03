@@ -1,0 +1,52 @@
+{% extends 'template.html' %}
+{% block content %}
+<div class="col-12">
+    <h2 class="mt-4">Dirigente/Representantes</h2>
+    <div class="justify-content-end mb-3">
+        <a href="/admin/dirigente/register" class="btn btn-success">Nuevo Dirigente</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Identificacion</th>
+                <th>Acciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if list %}
+            {% for item in list %}
+            <tr id="row-{{ item.id }}">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.nombre }} {{ item.apellido }}</td>
+                    <td>{{ item.tipo }}</td>
+                    <td>{{ item.identificacion }}</td>
+                    <td>
+                        <a href="/admin/dirigente/edit/{{ item.id }}" class="btn btn-info">Modificar</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteRow({{ item.id }})">Eliminar</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">No hay Diregentes registrados.</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function deleteRow(id) {
+        const row = document.getElementById(`row-${id}`);
+        if (confirm("¿Estás seguro de que deseas eliminar este dirigente.?")) {
+            row.remove();
+        }
+    }
+</script>
+{% endblock %}

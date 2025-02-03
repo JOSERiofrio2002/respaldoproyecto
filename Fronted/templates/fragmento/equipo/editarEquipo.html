@@ -1,0 +1,58 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="pagetitle">
+    <h1>Editar Equipo</h1>
+  </div>
+  <section class="section">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Modifica los datos del Equipo</h5>
+
+            <form class="row g-3 needs-validation" method="POST" action="/admin/equipo/update" novalidate id="editForm">
+              <input type="hidden" value="{{ equipo.id }}" name="id" />
+
+              <!-- Sección Dirigente -->
+              <hr>
+              <h6>Equipo</h6>
+          
+              <div class="col-md-6 mb-3">
+                <label for="nomE" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nomE" name="nomE" required value="{{ equipo.nombre }}">
+                <div class="invalid-feedback">Por favor, ingrese el nombre del dirigente.</div>
+              </div>
+
+              <div class="col-12 text-end">
+                <a type="button" class="btn btn-secondary" href="/admin/equipo/list" >Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Validación personalizada en el formulario
+  (function () {
+    'use strict'
+    window.addEventListener('load', function () {
+      var form = document.getElementById('editForm');
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    }, false);
+  })();
+</script>
+{% endblock %}

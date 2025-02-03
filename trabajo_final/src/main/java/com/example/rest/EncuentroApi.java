@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.example.controller.dao.services.EncuentroServices;
+import com.example.controller.dao.services.ResultadoServices;
 import com.example.controller.tda.list.LinkedList;
 import com.example.models.Encuentro;
 import com.google.gson.Gson;
@@ -31,11 +32,27 @@ public class EncuentroApi {
         map.put("msg", "Ok");
         map.put("data", as.listAll().toArray());
         if (as.listAll().isEmpty()) {
-            map.put("data", new Object[] {});
+            map.put("data", new Object[]{});
         }
         return Response.ok(map).build();
     }
 
+    @Path("/lista")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListAll() {
+        HashMap<String, Object> map = new HashMap<>();
+        EncuentroServices es = new EncuentroServices();
+        try {
+            map.put("msg", "Ok");
+            map.put("data", es.getListAll());
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(map).build();
+        }
+        return Response.ok(map).build();
+    }
 
     @Path("/get/{id}")
     @GET
@@ -58,42 +75,114 @@ public class EncuentroApi {
         }
 
         if (es.listAll().isEmpty()) {
-            map.put("data", new Object[] {});
+            map.put("data", new Object[]{});
             return Response.status(Status.BAD_REQUEST).entity(map).build();
         }
         return Response.ok(map).build();
     }
 
+@Path("/save")
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public Response save(HashMap<String, Object> map) {
+    HashMap<String, Object> res = new HashMap<>();
+    Gson g = new Gson();
+    String json = g.toJson(map);
+    System.out.println("***** Datos recibidos: " + json);
+
+    try {
+        if (map.get("resultado") == null) {
+            res.put("msg", "Error");
+            res.put("data", "El resultado es obligatorio");
+            return Response.status(Status.BAD_REQUEST).entity(res).build();
+        }
+
+        ResultadoServices resultadoServices = new ResultadoServices();
+        resultadoServices.setResultado(resultadoServices.get(Integer.parseInt(map.get("resultado").toString())));
+
+        if (resultadoServices.getResultado() == null || resultadoServices.getResultado().getId() == null) {
+            res.put("msg", "Error");
+            res.put("data", "El resultado no existe");
+            return Response.status(Status.BAD_REQUEST).entity(res).build();
+        }
+
+        EncuentroServices es = new EncuentroServices();
+        Encuentro encuentro = es.getEncuentro();
+
+        if (encuentro == null) {
+            res.put("msg", "Error");
+            res.put("data", "Encuentro no inicializado");
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(res).build();
+        }
+
+        // Aquí se asignan los valores validados
+        encuentro.setIdInscrito1(Integer.parseInt(map.get("idInscrito1").toString()));
+        encuentro.setIdInscrito2(Integer.parseInt(map.get("idInscrito2").toString()));
+        encuentro.setUbicacion(map.get("ubicacion").toString());
+        encuentro.setIdentificacion(map.get("identificacion").toString());
+        encuentro.setEstado(Boolean.parseBoolean(map.get("estado").toString()));
+        encuentro.setHoraInicio(Time.valueOf(map.get("horaInicio").toString()));
+
+        es.save();
+        res.put("msg", "Éxito");
+        res.put("data", "Encuentro guardado correctamente");
+        return Response.status(Status.OK).entity(res).build();
+    } catch (Exception e) {
+        e.printStackTrace();
+        res.put("msg", "Error interno");
+        res.put("data", e.getMessage());
+        return Response.status(Status.INTERNAL_SERVER_ERROR).entity(res).build();
+    }
+}
+    /*
     @Path("/save")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response save(HashMap<String, Object> map) {
+    public Response save(HashMap<String, Object> map) throws Exception {
         HashMap<String, Object> res = new HashMap<>();
         Gson g = new Gson();
         String a = g.toJson(map);
         System.out.println("***** " + a);
-
         try {
-            EncuentroServices es = new EncuentroServices();
-            es.getEncuentro().setIdInscrito1(Integer.parseInt(map.get("idInscrito1").toString()));
-            es.getEncuentro().setIdInscrito2(Integer.parseInt(map.get("idInscrito2").toString()));
-            es.getEncuentro().setUbicacion(map.get("ubicacion").toString());
-            es.getEncuentro().setIdentificacion(map.get("identificacion").toString());
-            es.getEncuentro().setEstado(Boolean.parseBoolean(map.get("estado").toString()));
-            es.getEncuentro().setHoraInicio(Time.valueOf(map.get("horaInicio").toString()));
-            es.save();
-            res.put("msg", "Ok");
-            res.put("data", "Guardado correctamente");
-            return Response.ok(res).build();
+            if (map.get("resultado") != null) {
+                ResultadoServices resultadoServices = new ResultadoServices();
+                resultadoServices.setResultado(resultadoServices.get(Integer.parseInt(map.get("person").toString())));
+                if (resultadoServices.getResultado().getId() != null) {
+                    EncuentroServices es = new EncuentroServices();
+                    es.getEncuentro().setIdInscrito1(Integer.parseInt(map.get("idInscrito1").toString()));
+                    es.getEncuentro().setIdInscrito2(Integer.parseInt(map.get("idInscrito2").toString()));
+                    es.getEncuentro().setUbicacion(map.get("ubicacion").toString());
+                    es.getEncuentro().setIdentificacion(map.get("identificacion").toString());
+                    es.getEncuentro().setEstado(Boolean.parseBoolean(map.get("estado").toString()));
+                    es.getEncuentro().setHoraInicio(Time.valueOf(map.get("horaInicio").toString()));
+                    //es.getEncuentro().setResultado(resultadoServices.getResultado().getId());
+                    es.save();
+                    res.put("msg", "Ok");
+                    res.put("data", "Guardado correctamente");
+                    return Response.ok(res).build();
+                } else {
+                    res.put("msg", "Error");
+                    res.put("data", "El resultado no existe");
+                    return Response.status(Status.BAD_REQUEST).entity(res).build();
+                }
+
+            } else {
+                res.put("msg", "Error");
+                res.put("data", "El resultado no existe");
+                return Response.status(Status.BAD_REQUEST).entity(res).build();
+            }
 
         } catch (Exception e) {
-            System.out.println("Error en save data" + e.toString());
+            System.out.println("Error en sav data " + e.toString());
             res.put("msg", "Error");
+            // res.put("msg", "ERROR");
             res.put("data", e.toString());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(res).build();
+            // TODO: handle exception
         }
-    }
+    }*/
 
     @Path("/update")
     @POST
@@ -153,16 +242,16 @@ public class EncuentroApi {
         }
     }
 
-     @Path("/ordenar")
+    @Path("/ordenar")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response ordenarEncuentros(
-        @QueryParam("by") String orderBy,
-        @QueryParam("direction") String orderDirection
+            @QueryParam("by") String orderBy,
+            @QueryParam("direction") String orderDirection
     ) {
         HashMap<String, Object> map = new HashMap<>();
         EncuentroServices es = new EncuentroServices();
-        
+
         boolean ascendente = orderDirection == null || orderDirection.equalsIgnoreCase("asc");
         LinkedList<Encuentro> encuentros;
 
@@ -205,15 +294,15 @@ public class EncuentroApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response buscarEncuentros(
-        @QueryParam("idInscrito1") Integer idInscrito1,
-        @QueryParam("idInscrito2") Integer idInscrito2,
-        @QueryParam("ubicacion") String ubicacion,
-        @QueryParam("identificacion") String identificacion,
-        @QueryParam("horaInicio") String horaInicio
+            @QueryParam("idInscrito1") Integer idInscrito1,
+            @QueryParam("idInscrito2") Integer idInscrito2,
+            @QueryParam("ubicacion") String ubicacion,
+            @QueryParam("identificacion") String identificacion,
+            @QueryParam("horaInicio") String horaInicio
     ) {
         HashMap<String, Object> map = new HashMap<>();
         EncuentroServices es = new EncuentroServices();
-        
+
         LinkedList<Encuentro> resultados = es.listAll();
 
         // Aplicar filtros
@@ -239,4 +328,5 @@ public class EncuentroApi {
 
         return Response.ok(map).build();
     }
+
 }

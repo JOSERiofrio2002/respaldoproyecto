@@ -1,0 +1,76 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="pagetitle">
+    <h1>Editar Jugador</h1>
+  </div>
+  <section class="section">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Modifica los datos del jugador</h5>
+
+            <form class="row g-3 needs-validation" method="POST" action="/admin/jugador/update" novalidate id="editForm">
+              <input type="hidden" value="{{ jugador.id }}" name="id" />
+
+              <!-- Sección Jugador -->
+              <hr>
+              <h6>Jugador</h6>
+          
+              <div class="col-md-6 mb-3">
+                <label for="nom" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nom" name="nom" required value="{{ jugador.nombre }}">
+                <div class="invalid-feedback">Por favor, ingrese el nombre del jugador.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="ape" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="ape" name="ape" required value="{{ jugador.apellido }}">
+                <div class="invalid-feedback">Por favor, ingrese el apellido del jugador.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="fono" class="form-label">Celular</label>
+                <input type="text" class="form-control" id="fono" name="fono" required value="{{ jugador.celular }}">
+                <div class="invalid-feedback">Por favor, ingrese el celular del jugador.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="nCam" class="form-label">Número de camiseta</label>
+                <input type="text" class="form-control" id="nCam" name="nCam" required value="{{ jugador.numCamiseta }}">
+                <div class="invalid-feedback">Por favor, ingrese el número de camiseta del jugador.</div>
+              </div>
+
+              <div class="col-12 text-end">
+                <a type="button" class="btn btn-secondary" href="/admin/jugador/list" >Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Validación personalizada en el formulario
+  (function () {
+    'use strict'
+    window.addEventListener('load', function () {
+      var form = document.getElementById('editForm');
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    }, false);
+  })();
+</script>
+{% endblock %}

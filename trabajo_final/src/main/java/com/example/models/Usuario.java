@@ -1,12 +1,17 @@
 package com.example.models;
 
 public class Usuario {
+	// Id Usuario
     private Integer id;
     private String correo;
     private String contrasenia;
     private Boolean estado;
 
-    public Usuario() {
+    private Integer idPersona;
+    // Podria ser en lugar de String la clase role
+    private Rol role;
+
+	public Usuario() {
     }
 
     public Usuario(Integer id, String correo, String contrasenia, Boolean estado) {
@@ -41,6 +46,20 @@ public class Usuario {
         this.estado = estado;
     }
 
-    // hashear contrasenia
+    public Rol getRole() {
+		return role;
+	}
+
+	public void setRole(Rol role) {
+		this.role = role;
+	}
+
+	public Integer getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(Integer idPersona) {
+		this.idPersona = idPersona;
+	}
 
 }

@@ -1,0 +1,54 @@
+{% extends 'template.html' %}
+
+{% block content %}
+<div class="col-12">
+    <h2 class="mt-4">Equipos</h2>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/admin/equipo/register" class="btn btn-success">Nuevo</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+                <th>Acciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if list%}
+            {% for item in list %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.nombre }}</td>
+                    <td>
+                        <a href="/admin/equipo/edit/{{ item.id }}" class="btn btn-info">Modificar</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteRow({{ item.id }})">Eliminar</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning">Gestionar Equipo</button>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">No hay equipos registrados.</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function deleteRow(id) {
+        const row = document.getElementById(`row-${id}`);
+        if (confirm("¿Estás seguro de que deseas eliminar este Equipo?")) {
+            row.remove();
+        }
+    }
+</script>
+{% endblock %}
