@@ -116,6 +116,7 @@ public class ArbitroApi {
             as.getArbitro().setApellido(map.get("apellido").toString()); 
             as.getArbitro().setIdentificacion(map.get("identificacion").toString());
             as.getArbitro().setCelular(map.get("celular").toString());
+            as.getArbitro().setGenero(Genero.valueOf(map.get("genero").toString()));
             as.getArbitro().setAsociacion(map.get("asociacion").toString());
             if (map.containsKey("fechaNacimiento") && map.get("fechaNacimiento") != null) {
                 String fechaNacimientoStr = map.get("fechaNacimiento").toString();

@@ -107,30 +107,27 @@ def update_person():
 
 # CRUD DE ARBITRO
 @router.route('/admin/arbitro/list')
-def listJugador():
+def list_arbitros():
     r = requests.get("http://localhost:8078/myapp/arbitro/list")
-    print(type(r.json()))
-    print(r.json())
     data = r.json()
-    return render_template('fragmento/Arbitro/listaArbitro.html', list=data["data"])
+    
+    if r.status_code == 200:
+        return render_template('fragmento/Arbitro/listaArbitro.html', list=data["data"])
+    else:
+        flash("Error al obtener la lista de árbitros", category='error')
+        return redirect(url_for('router.index'))
 
 @router.route('/admin/arbitro/register')
-def view_register_jugador():
-    r = requests.get("http://localhost:8078/myapp/arbitro/listType")
-    r2 = requests.get("http://localhost:8078/myapp/arbitro/listTypeGenero")
-    data = r.json()
-    data2 = r2.json()
-    print(r.json())
-    return render_template('fragmento/Arbitro/Arbitro.html', lista = data["data"], lista2 = data2["data"])
+def view_register_arbitro():
+    return render_template('fragmento/Arbitro/registroArbitro.html')
 
 @router.route('/admin/arbitro/edit/<int:id>')
 def edit_arbitro(id):
-    # Realizar solicitud GET a la myapp
     r = requests.get(f"http://localhost:8078/myapp/arbitro/get/{id}")
     data = r.json()
     
     if r.status_code == 200:
-        return render_template('fragmento/Arbitro/editarArbitro.html', list=data["data"], lista2 = data2["data"])
+        return render_template('fragmento/Arbitro/editarArbitro.html', arbitro=data["data"])
     else:
         flash("Error al obtener el árbitro", category='error')
         return redirect(url_for('router.list_arbitros'))
@@ -140,18 +137,15 @@ def save_arbitro():
     headers = {'Content-type': 'application/json'}
     form = request.form
     dataF = {
-        "nombre": form["nom"],
-        "apellido": form["ape"],
-        "identificacion": form["ident"],
-        "celular": form["fono"],
+        "nombre": form["nombre"],
+        "apellido": form["apellido"],
+        "identificacion": form["identificacion"],
+        "celular": form["celular"],
         "genero": form["genero"],
-        "asociacion": form["asociacion"]
+        "fechaNacimiento": form["fechaNacimiento"]
     }
     
-    # Realizar la solicitud POST a la myapp
-    r = requests.post("http://localhost:8078/myapp/arbitro/save", 
-                     data=json.dumps(dataF), 
-                     headers=headers)
+    r = requests.post("http://localhost:8078/myapp/arbitro/save", data=json.dumps(dataF), headers=headers)
     dat = r.json()
     
     if r.status_code == 200:
@@ -165,19 +159,15 @@ def update_arbitro():
     headers = {'Content-type': 'application/json'}
     form = request.form
     dataF = {
-        "idArbitro": form["id"],
-        "nombre": form["nom"],
-        "apellido": form["ape"],
-        "identificacion": form["ident"],
-        "celular": form["fono"],
+         "nombre": form["nombre"],
+        "apellido": form["apellido"],
+        "identificacion": form["identificacion"],
+        "celular": form["celular"],
         "genero": form["genero"],
-        "asociacion": form["asociacion"]
+        "fechaNacimiento": form["fechaNacimiento"]
     }
     
-    # Realizar la solicitud POST a la myapp
-    r = requests.post("http://localhost:8078/myapp/arbitro/update", 
-                     data=json.dumps(dataF), 
-                     headers=headers)
+    r = requests.post("http://localhost:8078/myapp/arbitro/update", data=json.dumps(dataF), headers=headers)
     dat = r.json()
     
     if r.status_code == 200:
@@ -191,10 +181,7 @@ def delete_arbitro(id):
     headers = {'Content-type': 'application/json'}
     dataF = {"idArbitro": id}
     
-    # Realizar la solicitud POST a la myapp
-    r = requests.post("http://localhost:8078/myapp/arbitro/delete", 
-                     data=json.dumps(dataF), 
-                     headers=headers)
+    r = requests.post("http://localhost:8078/myapp/arbitro/delete", data=json.dumps(dataF), headers=headers)
     
     if r.status_code == 200:
         flash("Árbitro eliminado exitosamente", category='info')

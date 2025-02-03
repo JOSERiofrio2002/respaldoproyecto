@@ -27,14 +27,6 @@ public class ArbitroServices {
         return arbitroDao.getListAll();
     }
 
-    public String getTipoIdentificacion(String tipo) {
-        return arbitroDao.getTipoIdentificacion();
-    }
-
-    public String getTipoGenero(String genero) {
-        return arbitroDao.getGenero();
-    }
-
     public Arbitro get(Integer id) throws Exception {
         return arbitroDao.get(id);
     }
@@ -50,6 +42,7 @@ public class ArbitroServices {
     public Boolean delete(Integer id) throws Exception {
         return arbitroDao.delete(id);
     }
+
 
     public LinkedList<Arbitro> ordenarPorNombre(boolean ascendente) throws Exception {
         return arbitroDao.ordenarPorNombre(ascendente);

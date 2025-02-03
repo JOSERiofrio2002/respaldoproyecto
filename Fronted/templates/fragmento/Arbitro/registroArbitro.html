@@ -3,69 +3,64 @@
 {% block content %}
 <div class="container">
   <div class="pagetitle">
-    <h1>Registro de Arbitro</h1>
+    <h1>Registro de Árbitro</h1>
   </div>
   <section class="section">
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Registrar Arbitro</h5>
+            <h5 class="card-title">Registrar Árbitro</h5>
 
             <form class="row g-3 needs-validation" method="POST" action="/admin/arbitro/save" novalidate id="registroForm">
 
-              <!-- Sección Arbitro -->
+              <!-- Sección Árbitro -->
               <hr>
-              <h6>Arbitro</h6>
+              <h6>Árbitro</h6>
          
               <div class="col-md-6 mb-3">
-                <label for="nom" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nom" name="nom" required value="{{ person.nombre }}">
-                <div class="invalid-feedback">Por favor, ingrese el nombre del dirigente.</div>
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <div class="invalid-feedback">Por favor, ingrese el nombre.</div>
               </div>
 
               <div class="col-md-6 mb-3">
-                <label for="ape" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="ape" name="ape" required value="{{ person.apellido }}">
-                <div class="invalid-feedback">Por favor, ingrese el apellido del arbitro.</div>
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                <div class="invalid-feedback">Por favor, ingrese el apellido.</div>
               </div>
 
               <div class="col-md-6 mb-3">
-                <label for="tipoIdentificacion" class="form-label">Tipo de Identificación</label>
-                <select class="form-control" id="tipoIdentificacion" name="tipo" required>
-                  {% for item in list %}
-                  <option value="{{ item }}" {% if item == person.tipo %}selected{% endif %}>{{ item }}</option>
-                  {% endfor %}
-                </select>
-                <div class="invalid-feedback">Seleccione un tipo de identificación.</div>
+                <label for="identificacion" class="form-label">Identificación</label>
+                <input type="text" class="form-control" id="identificacion" name="identificacion" required>
+                <div class="invalid-feedback">Por favor, ingrese la identificación.</div>
               </div>
 
               <div class="col-md-6 mb-3">
-                <label for="ident" class="form-label">Número de Identificación</label>
-                <input type="text" class="form-control" id="ident" name="ident" required value="{{ person.identificacion }}">
-                <div class="invalid-feedback">Ingrese el número de identificación.</div>
-              </div>
-
-              <div class="col-md-6 mb-3">
-                <label for="fono" class="form-label">Celular</label>
-                <input type="text" class="form-control" id="fono" name="fono" required value="{{ person.celular }}">
-                <div class="invalid-feedback">Ingrese un número de celular.</div>
+                <label for="celular" class="form-label">Celular</label>
+                <input type="text" class="form-control" id="celular" name="celular" required>
+                <div class="invalid-feedback">Por favor, ingrese el celular.</div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="genero" class="form-label">Género</label>
                 <select class="form-control" id="genero" name="genero" required>
-                  {% for item in list2 %}
-                  <option value="{{ item }}" {% if item == person.genero %}selected{% endif %}>{{ item }}</option>
-                  {% endfor %}
+                  <option value="MASCULINO">Masculino</option>
+                  <option value="FEMENINO">Femenino</option>
                 </select>
                 <div class="invalid-feedback">Seleccione el género.</div>
               </div>
-            
+
               <div class="col-md-6 mb-3">
                 <label for="asociacion" class="form-label">Asociación</label>
-                <input type="text" class="form-control" id="asociacion" name="asociacion" required value="{{ person.asociacion }}">
-                <div class="invalid-feedback">Ingrese la asociación.</div>
+                <input type="text" class="form-control" id="asociacion" name="asociacion" required>
+                <div class="invalid-feedback">Por favor, ingrese la asociación.</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                <div class="invalid-feedback">Por favor, ingrese la fecha de nacimiento.</div>
               </div>
 
               <div class="col-12 text-end">
@@ -95,5 +90,4 @@
     }, false);
   })();
 </script>
-
 {% endblock %}
