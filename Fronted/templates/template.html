@@ -37,6 +37,11 @@
     <div class="profile-img">
       <img src="{{ url_for('static', filename='img/my-profile-img.jpg') }}" alt="" class="img-fluid rounded-circle">
     </div>
+	<a href="index.html" class="logo d-flex align-items-center justify-content-center">
+	      <!-- Uncomment the line below if you also wish to use an image logo -->
+	      <!-- <img src="assets/img/logo.png" alt=""> -->
+	      <h1 class="sitename">{{session['name']}}</h1>
+	</a>
   
     <a href="http://192.168.1.7:5000/" class="logo d-flex align-items-center justify-content-center">
       <h1 class="sitename">Pagina Principal</h1>

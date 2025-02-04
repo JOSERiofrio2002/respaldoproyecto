@@ -1,67 +1,88 @@
-{% extends 'templateFirst.html' %}
 
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Deportivo</title>
+  <!-- Enlace al archivo CSS desde la carpeta 'static' -->
+  <link rel="stylesheet" href=" {{ url_for('static', filename='css/login.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+        <li class="flash-{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
-      <div class="d-flex justify-content-center py-4">
-        <a href="index.html" class="logo d-flex align-items-center w-auto">
-          <img src="assets/img/logo.png" alt="">
-          <span class="d-none d-lg-block">PC CENTER. ORDEN DE REPARACIONES</span>
-        </a>
-      </div><!-- End Logo -->
-
-      <div class="card mb-3">
-
-        <div class="card-body">
-
-          <div class="pt-4 pb-2">
-            <h5 class="card-title text-center pb-0 fs-4">INICIAR AESION</h5>
-            <p class="text-center small">Enter your username & password to login</p>
-          </div>
-
-          <form class="row g-3 needs-validation" novalidate>
-
-            <div class="col-12">
-              <label for="yourUsername" class="form-label">Username</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                <input type="text" name="username" class="form-control" id="yourUsername" required>
-                <div class="invalid-feedback">Please enter your username.</div>
-              </div>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="header">
+        <h1>⚽ SportsApp</h1>
+        <p>Gestión deportiva profesional al alcance de tu mano.</p>
+      </div>
+      <form 
+        method="post"
+        action="/index"
+        novalidate
+        onsubmit="return validateForm()"
+      >
+        <div class="input-group">
+          <input type="email" name="email" id="email" placeholder="Correo Electrónico" required>
+          <div
+                    class="invalid-feedback"
+                    id="emailFeedback"
+                    style="display: none"
+                  >
+                    Debe ingresar su correo Electrónico
             </div>
-
-            <div class="col-12">
-              <label for="yourPassword" class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" id="yourPassword" required>
-              <div class="invalid-feedback">Please enter your password!</div>
-            </div>
-
-            <div class="col-12">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">Remember me</label>
-              </div>
-            </div>
-            <div class="col-12">
-              <button class="btn btn-primary w-100" type="submit">Login</button>
-            </div>
-            <div class="col-12">
-              <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
-            </div>
-          </form>
-
         </div>
-      </div>
-
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-
+        <div class="input-group">
+          <input type="password" name="password" id="password" placeholder="Contraseña" required>
+          <div
+                    class="invalid-feedback"
+                    id="passwordFeedback"
+                    style="display: none"
+                  >
+                  Su contraseña debe ser mayor a 5 caracteres.. ingrese su contraseña.
+          </div>
+        </div>
+        <button type="submit" class="login-btn">Iniciar Sesión</button>
+        <div class="divider">
+        </div>
+      
     </div>
   </div>
-{% endblock %}
+</body>
+</html>
+
+<script>
+  function validateForm() {
+    // Limpiar mensajes de error
+    document.getElementById("emailFeedback").style.display = "none";
+    document.getElementById("passwordFeedback").style.display = "none";
+
+    const email = document.getElementById("email").value;
+    const pwd = document.getElementById("password").value;
+
+    let isValid = true;
+
+    // Validar que el email no esté vacía
+    if (!email.trim() || email.length < 5) {
+      document.getElementById("emailFeedback").style.display = "block";
+      isValid = false;
+    }
+    // Validar que la pwd no esté vacía
+    if (!pwd.trim() || pwd.length < 5) {
+      document.getElementById("passwordFeedback").style.display = "block";
+      isValid = false;
+    }
+
+    return isValid; // Si todas las validaciones pasan, enviar el formulario
+  }
+</script>
