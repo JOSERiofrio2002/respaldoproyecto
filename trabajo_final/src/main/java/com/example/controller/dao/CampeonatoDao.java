@@ -2,7 +2,8 @@ package com.example.controller.dao;
 
 import  com.example.controller.dao.implement.AdapterDao;
 import com.example.controller.tda.list.LinkedList;
-import com.example.models.Campeonato;
+import com.example.models.Campeonato; // Add this import statement
+
 
 
 public class CampeonatoDao extends AdapterDao<Campeonato>{
