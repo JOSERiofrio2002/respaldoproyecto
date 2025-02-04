@@ -3,6 +3,7 @@ package com.example.controller.dao.implement;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import com.example.controller.tda.list.LinkedList;
@@ -88,4 +89,19 @@ public class AdapterDao <T> implements InterfazDao<T> {
             System.out.println("Error al escribir en el archivo: " + e.getMessage());
         }
     }
+    
+    public void UpdateFile(LinkedList<T> dataList) throws Exception {
+		// 1. Crear un Objeto File o Archivo para almacenar los datos
+		File file = new File(URL + clazz.getSimpleName() + ".json");
+		String info = g.toJson(dataList.toArray());
+		// 2. Objeto como tipo cursor para la escritura
+		FileWriter fw = new FileWriter(file);
+		try { // Usamos try-with-resources para cerrar automáticamente el FileWriter
+			fw.write(info);
+			fw.flush();
+			fw.close();
+		} catch (IOException e) {
+			System.out.println("Error al escribir en el archivo: " + e.getMessage());
+		}
+	}
 }

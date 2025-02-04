@@ -104,7 +104,8 @@ public class LoginService {
 			tkn.setIdUsr(user.getId());
 			tkn.setToken(tokn);
         
-			
+			tkn.setFecha_creacion(formatter_fecha.format(fecha_em));
+			tkn.setExpiracion_token(formatter_fecha.format(fecha_exp));
 
 			tkn.setValid(true); // validar el tokn
 

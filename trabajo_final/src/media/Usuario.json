@@ -1,14 +1,1 @@
-[
-    {
-        "id": 1,
-        "correo": "prueba",
-        "contrasenia": "prueba",
-        "estado": true
-    },
-    {
-        "id": 2,
-        "correo": "prueba2",
-        "contrasenia": "prueba2",
-        "estado": false
-    }
-]
+[{"id":1,"correo":"prueba1","contrasenia":"prueba1","estado":true,"idPersona":11},{"id":2,"correo":"prueba2","contrasenia":"prueba2","estado":false,"idPersona":null},{"id":3,"correo":"prueba3","contrasenia":"$2a$05$/PF3qop/NaIbLfKr6NSBLOVBCgAKj6OTli/wbH3745R4tW.Fm5.aW","estado":true,"role":{"id":1,"nombre":"Administrador"}},{"id":4,"correo":"admin","contrasenia":"$2a$05$G0NV.1IWcsqbktNvAzeDm.G1Qvu5DhciTYp2CtsyIjuU1J7N2EQzK","estado":true,"idPersona":1,"role":{"id":1,"nombre":"Administrador"}}]
