@@ -1,13 +1,14 @@
 package com.example.models;
 
+
 public class Inscripcion {
     private Integer id;
-    private Float valorInscripcion;
+    private Double valorInscripcion;
 
     public Inscripcion() {
     }
 
-    public Inscripcion(Integer id, Float valorInscripcion) {
+    public Inscripcion(Integer id, Double valorInscripcion) {
         this.id = id;
         this.valorInscripcion = valorInscripcion;
     }
@@ -20,12 +21,13 @@ public class Inscripcion {
         this.id = id;
     }
 
-    public Float getValorInscripcion() {
+    public Double getValorInscripcion() {
         return valorInscripcion;
     }
 
-    public void setValorInscripcion(Float valorInscripcion) {
+    public void setValorInscripcion(Double valorInscripcion) {
         this.valorInscripcion = valorInscripcion;
     }
 
 }
+
