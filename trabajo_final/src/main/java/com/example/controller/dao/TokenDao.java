@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 
 public class TokenDao extends AdapterDao<Token>{
 
-	private static final String FILE_PATH = "path/to/your/file.json";
+	private static final String FILE_PATH = "src/media/";
 	
 	private Token tokn;
 	private LinkedList listTokns;
@@ -77,17 +77,20 @@ public class TokenDao extends AdapterDao<Token>{
         this.UpdateFile(listTokns); // Actualiza el archivo si es necesario
     }
 	
-	// Realizar metodo de busqueda por token, para comparar
-
-	private void UpdateFile(LinkedList listTokns) {
-		Gson gson = new Gson();
-		String json = gson.toJson(listTokns.toArray());
-
-        try (FileWriter writer = new FileWriter(FILE_PATH)) {
-            writer.write(json);
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }	
+	// Realizar metodo de busqueda por token, para comparar	
+	// Realizar metodo de busqueda por token,
+		public Token findbyTokn (String tkn) throws Exception{
+			Token tokn = null;
+			if (!getListTokns().isEmpty()) {
+				Token[] arr_tkn = (Token[]) getListTokns().toArray();
+				
+				for (Token token : arr_tkn) {
+					if (token.getToken().compareToIgnoreCase(tkn)==0) {
+						tokn = token;
+						break;
+					}
+				}
+			}
+			return tokn;
+		}
 }
