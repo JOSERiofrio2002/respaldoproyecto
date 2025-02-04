@@ -1,13 +1,1 @@
-[
-    {
-        "aniosExperiencia": 12,
-        "id": 1,
-        "nombre": "Stiven",
-        "apellido": "Jimenez",
-        "tipo": "CEDULA",
-        "identificacion": "1150096681",
-        "fechaNacimiento": "Jan 12, 2003, 12:00:00 AM",
-        "celular": "0989883012",
-        "genero": "MASCULINO"
-    }
-]
+[{"aniosExperiencia":12,"id":1,"nombre":"Stiven","apellido":"Jimenez","tipo":"CEDULA","identificacion":"1150096681","fechaNacimiento":"Jan 12, 2003, 12:00:00 AM","celular":"0989883012","genero":"MASCULINO","activo":false},{"aniosExperiencia":0,"id":2,"nombre":"Ariana","apellido":"Sarango ","tipo":"CEDULA","identificacion":"263561","fechaNacimiento":"Feb 17, 2018, 12:00:00 AM","celular":"098653213","genero":"FEMENINO","activo":false}]
