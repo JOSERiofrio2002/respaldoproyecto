@@ -15,12 +15,7 @@ def listResultado():
     # registrar resultado
 @routerResultado.route('/admin/resultado/register')
 def view_register_resultado():
-    r = requests.get("http://localhost:8078/myapp/resultado/list")
-    r2 = requests.get("http://localhost:8078/myapp/resultado/list")
-    data = r.json()
-    data2 = r2.json()
-    print(r.json())
-    return render_template('fragmento/Resultado/registroResultado.html', lista=data["data"], lista2=data2["data"])
+    return render_template('fragmento/Resultado/registroResultado.html')
 
     # guardar resultado
 @routerResultado.route('/admin/resultado/save', methods=["POST"])
@@ -28,12 +23,12 @@ def save_resultado():
     headers = {'Content-type': 'application/json'}
     form = request.form
     dataF = {
-        "equipo1": form["equipo1"],
-        "equipo2": form["equipo2"],
-        "golesEquipo1": int(form["golesEquipo1"]) if form["golesEquipo1"].isdigit() else 0,
-        "golesEquipo2": int(form["golesEquipo2"]) if form["golesEquipo2"].isdigit() else 0,
-        "fecha": form["fecha"],
-        "arbitro": form["arbitro"]
+        "equipoGanador": form["equipoGanador"],
+        "equipoPerdedor": form["equipoPerdedor"],
+        "golesEquipo1": form["golesEquipo1"],
+        "golesEquipo2": form["golesEquipo2"],
+        "empate": form["empate"],
+        "puntosEncuentro": form["puntosEncuentro"]
     }
     r = requests.post("http://localhost:8078/myapp/resultado/save", data=json.dumps(dataF), headers=headers)
     dat = r.json()
@@ -43,21 +38,17 @@ def save_resultado():
         flash(str(dat["data"]), category='error')
     return redirect("/admin/resultado/list")
 
-    # editar resultado
 @routerResultado.route('/admin/resultado/edit/<int:id>')
-def view_edit_resultado(id):
-    r = requests.get("http://localhost:8078/myapp/resultado/listType")
-    r1 = requests.get(f"http://localhost:8078/myapp/resultado/get/{id}")
-    r2 = requests.get("http://localhost:8078/myapp/resultado/listTypeGenero")
+def edit_resultado(id):
+    r = requests.get(f"http://localhost:8078/myapp/resultado/get/{id}")
     data = r.json()
-    data1 = r1.json()
-    data2 = r2.json()
     
-    if r1.status_code == 200:
-        return render_template('fragmento/Resultado/editarResultado.html', list=data["data"], list2=data2["data"], resultado=data1["data"])
+    if r.status_code == 200:
+        return render_template('fragmento/Resultado/editarResultado.html', resultado=data["data"])
     else:
-        flash(data1["data"], category='error')
-        return redirect("/admin/resultado/list")
+        flash("Error al obtener el resultado", category='error')
+        return redirect(url_for('router.list_resultado'))
+
     
     # actualizar resultado
 @routerResultado.route('/admin/resultado/update', methods=["POST"])
@@ -65,13 +56,12 @@ def update_resultado():
     headers = {'Content-type': 'application/json'}
     form = request.form
     dataF = {
-        "id": form["id"],
-        "equipo1": form["equipo1"],
-        "equipo2": form["equipo2"],
-        "golesEquipo1": int(form["golesEquipo1"]) if form["golesEquipo1"].isdigit() else 0,
-        "golesEquipo2": int(form["golesEquipo2"]) if form["golesEquipo2"].isdigit() else 0,
-        "fecha": form["fecha"],
-        "arbitro": form["arbitro"]
+        "equipoGanador": form["equipoGanador"],
+        "equipoPerdedor": form["equipoPerdedor"],
+        "golesEquipo1": form["golesEquipo1"],
+        "golesEquipo2": form["golesEquipo2"],
+        "empate": form["empate"],
+        "puntosEncuentro": form["puntosEncuentro"]
     }
     r = requests.post("http://localhost:8078/myapp/resultado/update", data=json.dumps(dataF), headers=headers)
     print(r)

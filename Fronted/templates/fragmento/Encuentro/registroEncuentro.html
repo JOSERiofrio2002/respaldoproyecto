@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
   <div class="pagetitle">
-    <h1>Registro de Encuentro</h1>
+    <h1>Registrar Encuentro</h1>
   </div>
   <section class="section">
     <div class="row justify-content-center">
@@ -20,47 +20,41 @@
               
               <div class="col-md-6 mb-3">
                 <label for="idInscrito1" class="form-label">ID Inscrito 1</label>
-                <input type="number" class="form-control" id="idInscrito1" name="idInscrito1" required value="{{ encuentro.idInscrito1 }}">
+                <input type="number" class="form-control" id="idInscrito1" name="idInscrito1" required>
                 <div class="invalid-feedback">Por favor, ingrese el ID del primer inscrito.</div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="idInscrito2" class="form-label">ID Inscrito 2</label>
-                <input type="number" class="form-control" id="idInscrito2" name="idInscrito2" required value="{{ encuentro.idInscrito2 }}">
+                <input type="number" class="form-control" id="idInscrito2" name="idInscrito2" required>
                 <div class="invalid-feedback">Por favor, ingrese el ID del segundo inscrito.</div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="ubicacion" class="form-label">Ubicación</label>
-                <input type="text" class="form-control" id="ubicacion" name="ubicacion" required value="{{ encuentro.ubicacion }}">
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
                 <div class="invalid-feedback">Por favor, ingrese la ubicación.</div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="identificacion" class="form-label">Identificación</label>
-                <input type="text" class="form-control" id="identificacion" name="identificacion" required value="{{ encuentro.identificacion }}">
+                <input type="text" class="form-control" id="identificacion" name="identificacion" required>
                 <div class="invalid-feedback">Por favor, ingrese la identificación.</div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="estado" class="form-label">Estado</label>
                 <select class="form-control" id="estado" name="estado" required>
-                  <option value="true" {% if encuentro.estado %}selected{% endif %}>Activo</option>
-                  <option value="false" {% if not encuentro.estado %}selected{% endif %}>Inactivo</option>
+                  <option value="true">Activo</option>
+                  <option value="false">Inactivo</option>
                 </select>
-                <div class="invalid-feedback">Por favor, seleccione el estado.</div>
+                <div class="invalid-feedback">Seleccione el estado.</div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="horaInicio" class="form-label">Hora de Inicio</label>
-                <input type="time" class="form-control" id="horaInicio" name="horaInicio" required value="{{ encuentro.horaInicio }}">
+                <input type="time" class="form-control" id="horaInicio" name="horaInicio" required>
                 <div class="invalid-feedback">Por favor, ingrese la hora de inicio.</div>
-              </div>
-
-              <div class="col-md-6 mb-3">
-                <label for="horaInicio" class="form-label">Hora de Finalizacion</label>
-                <input type="time" class="form-control" id="horaFin" name="horaFin" required value="{{ encuentro.horaFin }}">
-                <div class="invalid-feedback">Por favor, ingrese la hora de Finalizacion.</div>
               </div>
 
               <div class="col-12 text-end">
@@ -90,5 +84,4 @@
     }, false);
   })();
 </script>
-
 {% endblock %}

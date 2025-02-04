@@ -32,33 +32,37 @@
 <body class="index-page">
 
   <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-
+    <i id="menuToggle" class="header-toggle d-xl-none bi bi-list"></i>
+  
     <div class="profile-img">
       <img src="{{ url_for('static', filename='img/my-profile-img.jpg') }}" alt="" class="img-fluid rounded-circle">
-
     </div>
-
+  
     <a href="http://192.168.1.7:5000/" class="logo d-flex align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
       <h1 class="sitename">Pagina Principal</h1>
     </a>
-
-   
+  
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="/admin/equipo/list" class="active"><i class="bi bi-house navicon"></i>Equipo</a></li>
+        <li><a href="/admin/equipo/list" class="active"><i class="bi bi-person navicon"></i>Equipo</a></li>
         <li><a href="/admin/dirigente/list"><i class="bi bi-person navicon"></i> Dirigente</a></li>
         <li><a href="/admin/jugador/list"><i class="bi bi-person navicon"></i> Jugador</a></li>
         <li><a href="/admin/arbitro/list"><i class="bi bi-person navicon"></i> Arbitro</a></li>
         <li><a href="/admin/encuentro/list"><i class="bi bi-person navicon"></i> Encuentro </a></li>
         <li><a href="/admin/infraccion/list"><i class="bi bi-person navicon"></i> Infracciones</a></li>
-              
+        <li><a href="/admin/resultado/list"><i class="bi bi-person navicon"></i> Resultado</a></li>
       </ul>
     </nav>
-
   </header>
+
+    <script>
+      document.getElementById("menuToggle").addEventListener("click", function () {
+        let menu = document.getElementById("navmenu");
+        menu.classList.toggle("active");
+        this.classList.toggle("bi-x");
+      });
+    </script>
+
 
   <main class="main">
     <!-- Hero Section -->

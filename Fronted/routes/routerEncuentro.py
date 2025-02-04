@@ -15,12 +15,7 @@ def listEncuentro():
 # registrar encuentro
 @routerEncuentro.route('/admin/encuentro/register')
 def view_register_encuentro():
-    r = requests.get("http://localhost:8078/myapp/encuentro/listType")
-    r2 = requests.get("http://localhost:8078/myapp/encuentro/listTypeGenero")
-    data = r.json()
-    data2 = r2.json()
-    print(r.json())
-    return render_template('fragmento/Encuentro/registroEncuentro.html', lista=data["data"], lista2=data2["data"])
+    return render_template('fragmento/Encuentro/registroEncuentro.html')
 
 # guardar encuentro
 @routerEncuentro.route('/admin/encuentro/save', methods=["POST"])
@@ -28,12 +23,13 @@ def save_encuentro():
     headers = {'Content-type': 'application/json'}
     form = request.form
     dataF = {
-        "equipo1": form["equipo1"],
-        "equipo2": form["equipo2"],
-        "fecha": form["fecha"],
-        "hora": form["hora"],
-        "lugar": form["lugar"],
-        "arbitro": form["arbitro"]
+        "idInscrito1": form["idInscrito1"],
+        "idInscrito2": form["idInscrito2"],
+        "ubicacion": form["ubicacion"],
+        "identificacion": form["identificacion"],
+        "estado": form["estado"],
+        "horaInicio": form["horaInicio"]
+
     }
     r = requests.post("http://localhost:8078/myapp/encuentro/save", data=json.dumps(dataF), headers=headers)
     dat = r.json()
@@ -45,19 +41,15 @@ def save_encuentro():
 
 # editar encuentro
 @routerEncuentro.route('/admin/encuentro/edit/<int:id>')
-def view_edit_encuentro(id):
-    r = requests.get("http://localhost:8078/myapp/encuentro/listType")
-    r1 = requests.get(f"http://localhost:8078/myapp/encuentro/get/{id}")
-    r2 = requests.get("http://localhost:8078/myapp/encuentro/listTypeGenero")
+def edit_encuentro(id):
+    r = requests.get(f"http://localhost:8078/myapp/encuentro/get/{id}")
     data = r.json()
-    data1 = r1.json()
-    data2 = r2.json()
-
-    if r1.status_code == 200:
-        return render_template('fragmento/Encuentro/editarEncuentro.html', list=data["data"], list2=data2["data"], encuentro=data1["data"])
+    
+    if r.status_code == 200:
+        return render_template('fragmento/Encuentro/editarEncuentro.html', encuentro=data["data"])
     else:
-        flash(data1["data"], category='error')
-        return redirect("/admin/encuentro/list")
+        flash("Error al obtener el encuentro", category='error')
+        return redirect(url_for('router.list_encuentro'))
 
 # actualizar encuentro
 @routerEncuentro.route('/admin/encuentro/update', methods=["POST"])
@@ -65,13 +57,13 @@ def update_encuentro():
     headers = {'Content-type': 'application/json'}
     form = request.form
     dataF = {
-        "id": form["id"],
-        "equipo1": form["equipo1"],
-        "equipo2": form["equipo2"],
-        "fecha": form["fecha"],
-        "hora": form["hora"],
-        "lugar": form["lugar"],
-        "arbitro": form["arbitro"]
+        
+        "idInscrito1": form["idInscrito1"],
+        "idInscrito2": form["idInscrito2"],
+        "ubicacion": form["ubicacion"],
+        "identificacion": form["identificacion"],
+        "estado": form["estado"],
+        "horaInicio": form["horaInicio"]
     }
     r = requests.post("http://localhost:8078/myapp/encuentro/update", data=json.dumps(dataF), headers=headers)
     print(r)
